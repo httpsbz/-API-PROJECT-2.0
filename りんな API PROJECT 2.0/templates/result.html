@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranker API Result - ランカー API 結果</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #000;
+        }
+        p {
+            margin-top: 20px;
+            text-align: center;
+            color: #000;
+        }
+        .logo {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="input_form.html" class="back-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Back_Arrow.svg" alt="Back">
+        </a>
+        <h1>Ranker API Result</h1>
+        <p>For the input phrase "{{ userInput }}", the most appropriate reply is "{{ bestResponse }}" with a score of {{ score }}.</p>
+    </div>
+    <a href="https://www.facebook.com/LetranCalambaOfficial">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Logo_of_Colegio_de_San_Juan_de_Letran-Calamba.png" alt="Logo" class="logo">
+    </a>
+</body>
+</html>

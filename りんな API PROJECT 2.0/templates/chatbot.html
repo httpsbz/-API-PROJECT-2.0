@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Bot - ようこそ リンナ アピ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #000;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+        .chat-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .user-input {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background: #000;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        .logo {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="https://scirrhous-twins.000webhostapp.com/" class="back-button">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Back_Arrow.svg" alt="Back">
+    </a>
+    <h1>Chat Bot - ようこそ リンナ アピ</h1>
+    <div class="chat-box" id="chat-box">
+        {% for entry in dialog_history %}
+        <p>{{ entry }}</p>
+        {% endfor %}
+    </div>
+    <form id="user-input-form">
+        <div class="user-input">
+            <input type="text" id="user-input" name="userInput" placeholder="Type your message..."><br><br>
+            <input type="submit" value="Send">
+        </div>
+    </form>
+</div>
+<a href="https://www.facebook.com/LetranCalambaOfficial">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Logo_of_Colegio_de_San_Juan_de_Letran-Calamba.png" alt="Logo" class="logo">
+</a>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('user-input-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            sendMessage();
+        });
+    });
+
+    function sendMessage() {
+        var userInput = document.getElementById('user-input').value;
+        appendMessage('You', userInput);
+
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'userInput=' + userInput
+        })
+        .then(response => response.json())
+        .then(data => {
+            appendMessage('AI', data.response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        document.getElementById('user-input').value = '';
+    }
+
+    function appendMessage(sender, message) {
+        var chatBox = document.getElementById('chat-box');
+        var messageElement = document.createElement('p');
+        messageElement.textContent = sender + ': ' + message;
+        chatBox.appendChild(messageElement);
+    }
+</script>
+</body>
+</html>

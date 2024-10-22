@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarization - テキスト概要</title>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #000;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button[type="submit"] {
+            background-color: #000;
+            color: #fff;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: calc(100% - 20px);
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #333;
+        }
+        #response-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #000;
+            border-radius: 4px;
+            color: #000;
+        }
+        #response-container p {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+        #response-container p strong {
+            font-weight: bold;
+        }
+        .logo {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://scirrhous-twins.000webhostapp.com/index.html" class="back-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Back_Arrow.svg" alt="Back">
+        </a>
+        <h1>Text Summarization - テキスト概要</h1>
+        <form id="query-form">
+            <input type="text" id="userQuery" name="userQuery" placeholder="Enter your query...">
+            <button type="submit">Submit</button>
+        </form>
+        <div id="response-container"></div>
+    </div>
+    <a href="https://www.facebook.com/LetranCalambaOfficial">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Logo_of_Colegio_de_San_Juan_de_Letran-Calamba.png" alt="Logo" class="logo">
+    </a>
+    <script>
+        document.getElementById('query-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const userQuery = document.getElementById('userQuery').value;
+            fetch('/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'userQuery': userQuery
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response-container').innerHTML = `
+                    <p><strong>Response:</strong> ${data.answer}</p>
+                    <p><strong>Keyword:</strong> ${data.keyword}</p>
+                `;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

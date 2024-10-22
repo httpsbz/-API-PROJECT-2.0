@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Scorer - テキストスコア</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #000;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #000;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #000;
+            color: #fff;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #333;
+        }
+        .logo {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://scirrhous-twins.000webhostapp.com/index.html" class="back-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Back_Arrow.svg" alt="Back">
+        </a>
+        <h1>Text Scorer - テキストスコア</h1>
+        <form action="/result" method="post">
+            <label for="userInput">Input any phrase (query):</label><br>
+            <input type="text" id="userInput" name="userInput"><br>
+            <label for="candidateReplies">Enter candidate replies:</label><br>
+            <input type="text" name="candidateReplies[]"><br>
+            <input type="text" name="candidateReplies[]"><br>
+            <input type="text" name="candidateReplies[]"><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <a href="https://www.facebook.com/LetranCalambaOfficial">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Logo_of_Colegio_de_San_Juan_de_Letran-Calamba.png" alt="Logo" class="logo">
+    </a>
+</body>
+</html>

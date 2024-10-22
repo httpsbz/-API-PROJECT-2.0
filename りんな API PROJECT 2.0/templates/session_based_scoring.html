@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation Scorer - 会話スコア</title>
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #000;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button[type="button"], button[type="submit"] {
+            background-color: #000;
+            color: #fff;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: calc(100% - 20px);
+            font-size: 16px;
+        }
+        button[type="button"]:hover, button[type="submit"]:hover {
+            background-color: #333;
+        }
+        #response-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #000;
+            border-radius: 4px;
+            color: #000;
+        }
+        #response-container p {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+        #response-container p strong {
+            font-weight: bold;
+        }
+        .logo {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://scirrhous-twins.000webhostapp.com/index.html" class="back-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Back_Arrow.svg" alt="Back">
+        </a>
+        <h1>Conversation Scorer - 会話スコア</h1>
+        <form id="conversation-form" onsubmit="handleSubmit(event)">
+            <input type="text" id="conversationInput" placeholder="Enter Conversation Input">
+            <button type="button" id="addConversationBtn">Add Conversation</button>
+            <input type="text" id="responseInput" placeholder="Enter Response Input">
+            <button type="button" id="addResponseBtn">Add Response</button>
+            <button type="submit" id="submitBtn">Submit</button>
+        </form>
+
+        <div id="response-container"></div>
+    </div>
+    <a href="https://www.facebook.com/LetranCalambaOfficial">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Logo_of_Colegio_de_San_Juan_de_Letran-Calamba.png" alt="Logo" class="logo">
+    </a>
+    <script>
+        let dialogHistory = [];
+        let responses = [];
+
+        document.getElementById('addConversationBtn').addEventListener('click', function() {
+            const conversationInput = document.getElementById('conversationInput').value;
+            if (conversationInput) {
+                dialogHistory.push(conversationInput);
+                document.getElementById('conversationInput').value = '';
+                alert('Conversation added');
+            }
+        });
+
+        document.getElementById('addResponseBtn').addEventListener('click', function() {
+            const responseInput = document.getElementById('responseInput').value;
+            if (responseInput) {
+                responses.push(responseInput);
+                document.getElementById('responseInput').value = '';
+                alert('Response added');
+            }
+        });
+
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            fetch('/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    dialogHistory: dialogHistory,
+                    responses: responses
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const { top_candidate, score } = data;
+                document.getElementById('response-container').innerHTML = `
+                    <p><strong>The most appropriate response is:</strong> "${top_candidate}" with a score of ${score}</p>
+                `;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
